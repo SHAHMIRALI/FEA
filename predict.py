@@ -1,31 +1,10 @@
 import os
 import numpy as np
-from constants import TEST_DIR, MODEL_PATH
+import cv2
+from constants import TEST_DIR, MODEL_PATH, EMOTION_MAP, IMG_DIM
 
 from keras.models import load_model
 from keras.preprocessing import image as kimg
-
-
-
-model = load_model(MODEL_PATH)
-
-def folderEncoder(folderName):
-    if folderName=='Angry':
-        return 0
-    elif folderName=="Disgust":
-        return 1
-    elif folderName=='Fear':
-        return 2
-    elif folderName=="Happy":
-        return 3
-    elif folderName=='Neutral':
-        return 4
-    elif folderName=="Sad":
-        return 5
-    elif folderName=='Surprise':
-        return 6
-    else:
-        return None
 
 
 def predict_emotion(img, m):
@@ -41,26 +20,88 @@ def predict_emotion(img, m):
 
     return prediction
 
+def display_expression(full_img, model, mode=0):
+    full_img_g = cv2.cvtColor(full_img, cv2.COLOR_BGR2GRAY)
 
-result=[]
-total = 0
-correct = 0
-for folder1 in os.listdir(TEST_DIR):
-    print(folder1)
-    y_true=folderEncoder(folder1)
-    for filename in os.listdir(os.path.join(TEST_DIR,folder1)):
-        path = os.path.join(os.path.join(TEST_DIR,folder1), filename)
-        img = kimg.load_img(path, target_size=(48, 48), color_mode="grayscale")
+    # Use haarcascade to find face in img
+    face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+    faces = face_cascade.detectMultiScale(full_img_g, 1.3, 5)
 
-        # models prediction
-        y_pred = predict_emotion(img, model)
+    # Go over all faces found in image and detect emotion
+    for (x, y, w, h) in faces:
 
-        result.append([y_true, y_pred[0]])
+        # Draw bounding box on img
+        full_img = cv2.rectangle(full_img, (x, y), (x + w, y + h), (0, 0, 0), 2)
 
-        #if it matches true label
-        if y_true == y_pred[0]:
-            correct+=1
+        # Crop out bounding box
+        full_img_bb = full_img[y:y + h, x:x + w]
 
-        total += 1
+        # Resize image to 48x48 for our model
+        resized_image = cv2.resize(full_img_bb, (IMG_DIM, IMG_DIM))
+        resized_image = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
 
-print("test accuracy: {}".format(correct/total))
+        if mode == 0:
+            cv2.imwrite("./Test pics/" + str(w) + str(h) + '_faces.jpg', resized_image)
+
+        # Pass image to model
+        expression = predict_emotion(resized_image, model)
+
+        # Label and display image
+        cv2.putText(full_img, EMOTION_MAP[expression[0]], (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+                    (0, 255, 0), 2)
+        cv2.imshow("Facial Expression Analysis", full_img)
+        cv2.waitKey(mode)
+
+        return
+
+    print("Couldn't find face")
+    return
+
+def detect_emotions_webcam(model):
+    webcam = cv2.VideoCapture(0)
+
+    while True:
+        capture, frame = webcam.read()
+
+        if capture == False:
+            continue
+
+        # in video mode
+        display_expression(frame, model, mode=1)
+
+    return
+
+# Find facial expression in an individual img
+model = load_model(MODEL_PATH)
+path = "./Test pics/got2.jpg"
+full_img = cv2.imread(path)
+display_expression(full_img, model)
+
+# detect_emotions_webcam(model)
+
+
+# Test our models accuracy across our testing set
+test = False
+
+if test == True:
+    result=[]
+    total = 0
+    correct = 0
+
+    for emotion in os.listdir(TEST_DIR):
+
+        for filename in os.listdir(os.path.join(TEST_DIR, emotion)):
+            path = os.path.join(os.path.join(TEST_DIR,emotion), filename)
+            img = kimg.load_img(path, target_size=(48, 48), color_mode="grayscale")
+
+            # models prediction
+            prediction = predict_emotion(img, model)
+            emotion_str = EMOTION_MAP[prediction[0]]
+
+            #if it matches true label
+            if emotion == emotion_str:
+                correct+=1
+
+            total += 1
+
+    print("test accuracy: {}".format(correct/total))
