@@ -73,11 +73,11 @@ def detect_emotions_webcam(model):
 
 # Find facial expression in an individual img
 model = load_model(MODEL_PATH)
-path = "./Test pics/got2.jpg"
+path = "./Test pics/How-To-Control-Hunger-E28093-20-Best-Strategies-To-Stop-Feeling-Hungry-All-The-Time-624x702.png"
 full_img = cv2.imread(path)
 display_expression(full_img, model)
 
-# detect_emotions_webcam(model)
+#detect_emotions_webcam(model)
 
 
 # Test our models accuracy across our testing set
@@ -89,10 +89,11 @@ if test == True:
     correct = 0
 
     for emotion in os.listdir(TEST_DIR):
-
+        sub_total = 0
+        sub_correct = 0
         for filename in os.listdir(os.path.join(TEST_DIR, emotion)):
             path = os.path.join(os.path.join(TEST_DIR,emotion), filename)
-            img = kimg.load_img(path, target_size=(48, 48), color_mode="grayscale")
+            img = kimg.load_img(path, target_size=(IMG_DIM, IMG_DIM), color_mode="grayscale")
 
             # models prediction
             prediction = predict_emotion(img, model)
@@ -101,7 +102,11 @@ if test == True:
             #if it matches true label
             if emotion == emotion_str:
                 correct+=1
+                sub_correct += 1
 
             total += 1
+            sub_total += 1
+        print(emotion)
+        print("test accuracy: {}".format(sub_correct / sub_total))
 
     print("test accuracy: {}".format(correct/total))
