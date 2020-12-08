@@ -81,7 +81,7 @@ display_expression(full_img, model)
 
 
 # Test our models accuracy across our testing set
-test = False
+test = True
 
 if test == True:
     result=[]
@@ -106,7 +106,7 @@ if test == True:
 
             total += 1
             sub_total += 1
-        print(emotion)
-        print("test accuracy: {}".format(sub_correct / sub_total))
+
+        print("{} test accuracy: {}".format(emotion, sub_correct / sub_total))
 
     print("test accuracy: {}".format(correct/total))
