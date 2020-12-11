@@ -19,6 +19,7 @@ import tensorflow as tf
 #Step 1 Augmenting data
 
 datagen_train = ImageDataGenerator(horizontal_flip=True)
+#datagen_train = ImageDataGenerator(horizontal_flip=True, rotation_range=10, zoom_range=0.1, rescale=1/255.0, fill_mode="nearest")
 
 train_generator = datagen_train.flow_from_directory(TRAIN_DIR,
                                                     target_size=(IMG_DIM,IMG_DIM),

@@ -17,28 +17,28 @@ def create_model(lr=0.0005):
     # Divide height and width of conv block by 2
     model.add(MaxPooling2D(pool_size=(2, 2)))
     # can mess around with this hyperparameter (drops random data)
-    model.add(Dropout(0.25))
+    model.add(Dropout(0.2))
 
     # Second CNN layer
     model.add(Conv2D(128, (5, 5), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
+    model.add(Dropout(0.2))
 
     # Third CNN layer
     model.add(Conv2D(512, (3, 3), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
+    model.add(Dropout(0.2))
 
     # Fourth CNN layer
     model.add(Conv2D(512, (3, 3), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
+    model.add(Dropout(0.2))
 
     # Flattening
     model.add(Flatten())
@@ -47,13 +47,13 @@ def create_model(lr=0.0005):
     model.add(Dense(256))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.25))
+    model.add(Dropout(0.2))
 
     # Fully connected layer 2nd layer
     model.add(Dense(512))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.25))
+    model.add(Dropout(0.2))
 
     # 7 labels
     model.add(Dense(7, activation='softmax'))

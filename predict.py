@@ -1,6 +1,8 @@
 import os
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
+
 from constants import TEST_DIR, MODEL_PATH, EMOTION_MAP, IMG_DIM
 
 from keras.models import load_model
@@ -15,10 +17,10 @@ def predict_emotion(img, m):
     img = np.resize(img, (1, 48, 48, 1))
     images.append(img)
 
-    prediction = m.predict(images)
-    prediction = np.argmax(prediction, axis=1)
+    prediction_vector = m.predict(images)
+    prediction = np.argmax(prediction_vector, axis=1)
 
-    return prediction
+    return prediction, prediction_vector
 
 def display_expression(full_img, model, mode=0):
     full_img_g = cv2.cvtColor(full_img, cv2.COLOR_BGR2GRAY)
@@ -44,13 +46,37 @@ def display_expression(full_img, model, mode=0):
             cv2.imwrite("./Test pics/" + str(w) + str(h) + '_faces.jpg', resized_image)
 
         # Pass image to model
-        expression = predict_emotion(resized_image, model)
+        expression, pv = predict_emotion(resized_image, model)
 
         # Label and display image
         cv2.putText(full_img, EMOTION_MAP[expression[0]], (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
                     (0, 255, 0), 2)
+
         cv2.imshow("Facial Expression Analysis", full_img)
         cv2.waitKey(mode)
+
+        # Show prediction vector bar graph
+        if mode == 0:
+            emotions = []
+            probabilities = []
+            for i in range(len(pv[0])):
+                emotions.append(EMOTION_MAP[i])
+                probabilities.append(pv[0][i])
+
+            plt.style.use('ggplot')
+
+            x_pos = [i for i, _ in enumerate(emotions)]
+
+            plt.bar(x_pos, probabilities, color='green')
+            plt.xlabel("Emotions")
+            plt.ylabel("Probability")
+            plt.title("Prediction Vector")
+
+            plt.xticks(x_pos, emotions)
+
+            plt.show()
+
+
 
         return
 
@@ -73,9 +99,17 @@ def detect_emotions_webcam(model):
 
 # Find facial expression in an individual img
 model = load_model(MODEL_PATH)
-path = "./Test pics/How-To-Control-Hunger-E28093-20-Best-Strategies-To-Stop-Feeling-Hungry-All-The-Time-624x702.png"
-full_img = cv2.imread(path)
-display_expression(full_img, model)
+# path = "./Test pics/barry.jpg"
+# full_img = cv2.imread(path)
+# display_expression(full_img, model)
+#
+# path = "./Test pics/got.jpg"
+# full_img = cv2.imread(path)
+# display_expression(full_img, model)
+#
+# path = "./Test pics/kg.PNG"
+# full_img = cv2.imread(path)
+# display_expression(full_img, model)
 
 #detect_emotions_webcam(model)
 
@@ -96,7 +130,7 @@ if test == True:
             img = kimg.load_img(path, target_size=(IMG_DIM, IMG_DIM), color_mode="grayscale")
 
             # models prediction
-            prediction = predict_emotion(img, model)
+            prediction, pv = predict_emotion(img, model)
             emotion_str = EMOTION_MAP[prediction[0]]
 
             #if it matches true label
