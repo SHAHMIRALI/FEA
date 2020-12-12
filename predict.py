@@ -78,8 +78,6 @@ def display_expression(full_img, model, mode=0):
 
             plt.show()
 
-
-
         return
 
     print("Couldn't find face")
@@ -112,9 +110,7 @@ model = load_model(MODEL_PATH)
 #detect_emotions_webcam(model)
 
 # Test our models accuracy across our testing set
-test = True
-
-if test == True:
+def test_model():
     total = 0
     correct = 0
 
@@ -125,13 +121,20 @@ if test == True:
             img = kimg.load_img(path, target_size=(IMG_DIM, IMG_DIM), color_mode="grayscale")
 
             # models prediction
-            prediction, pv = predict_emotion(img, model)
+            prediction = predict_emotion(img, model)
             emotion_str = EMOTION_MAP[prediction[0]]
 
             result.add(emotion_str)
 
+        # Print results for each emotion
         result.summarize()
+
+        # Store the results for final summary
         total += result.total
         correct += result.predictions[EMOTION_KEY_MAP[emotion]]
 
-    print("test accuracy: {}".format(correct/total))
+    # Final summary
+    print("test accuracy: %.2f" % (correct/total))
+
+# Uncomment to run
+test_model()
