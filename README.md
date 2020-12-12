@@ -1,4 +1,4 @@
-# Facial Expression Analyzer
+# Facial Expression Analyzer (FEA)
 
 ## Google Colab
 ### First time
