@@ -27,7 +27,7 @@ class Result:
         print("SUMMARY")
         hrule()
         print(f"Total tests:\t{self.total}\nCorrect:\t{self.predictions[EMOTION_KEY_MAP[self.emotion]]}")
-        print("Accuracy:\t%.2f%" % (100 * self.predictions[EMOTION_KEY_MAP[self.emotion]] / self.total))
+        print("Accuracy:\t%.2f%%" % (100 * self.predictions[EMOTION_KEY_MAP[self.emotion]] / self.total))
         hrule()
 
         # For all images of this emotion, what is the distribution of our model's predictions' spread?
@@ -37,7 +37,7 @@ class Result:
         print_row(['Emotion', 'Hits', 'Share'], col1=col_1_size)
         for i in range(Result.TOTAL_EMOTIONS):
             emotion = ('*' if EMOTION_MAP[i] == self.emotion else ' ') + EMOTION_MAP[i]
-            share = '%.2f%' % (100 * self.predictions[i] / self.total)
+            share = '%.2f%%' % (100 * self.predictions[i] / self.total)
             print_row([emotion, self.predictions[i], share], col1=col_1_size)
         fat_hrule(20)
 
