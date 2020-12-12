@@ -9,8 +9,9 @@
 2. Open `predict.ipynb`.
 
 ### Notebooks
-`train.ipynb` Colab notebook: https://colab.research.google.com/github/SHAHMIRALI/Facial-Expression-Analyzer/blob/main/train.ipynb
-`predict.ipynb` Colab notebook: https://colab.research.google.com/github/SHAHMIRALI/Facial-Expression-Analyzer/blob/main/predict.ipynb
+`train.ipynb` Colab notebook: https://colab.research.google.com/github/420NPEasy/FEA/blob/main/train.ipynb
+
+`predict.ipynb` Colab notebook: https://colab.research.google.com/github/420NPEasy/FEA/blob/main/predict.ipynb
 
 ## Code
 Python version: 3
