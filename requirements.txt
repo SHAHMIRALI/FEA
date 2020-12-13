@@ -1,0 +1,13 @@
+numpy<1.19.0,>=1.16.0
+setuptools>=41.0.0
+ipython
+tensorflow
+torch
+torchvision
+tqdm
+matplotlib
+livelossplot
+opencv-python
+keras
+pillow
+flask
