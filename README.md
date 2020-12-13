@@ -1,5 +1,20 @@
 # Facial Expression Analyzer (FEA)
 
+## Data
+### Datasets
+Extract the datasets after a commit:
+```tar -xvzf train/datasets.gzip```
+
+Compress the datasets before a commit:
+```tar -cz train/Datasets/ > train/datasets.gzip```
+
+### Test pics
+Extract the datasets after a commit:
+```tar -xvzf test/test_pics.gzip```
+
+Compress the datasets before a commit:
+```tar -cz test/Test_pics/ > test/test_pics.gzip```
+
 ## Google Colab
 ### First time
 1. Go to https://colab.research.google.com/github/ and select `"Include private repos"`
