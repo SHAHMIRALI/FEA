@@ -11,11 +11,6 @@ from keras.utils import plot_model
 from common.constants import TRAIN_DIR, VALIDATION_DIR, MODEL_PATH, IMG_DIM, BATCH_SIZE, EPOCHS
 from train.model import create_model
 
-
-from IPython.display import SVG, Image
-from livelossplot import PlotLossesKeras
-import tensorflow as tf
-
 #Step 1 Augmenting data
 
 datagen_train = ImageDataGenerator(horizontal_flip=True)
