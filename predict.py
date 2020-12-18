@@ -4,7 +4,7 @@ import cv2
 
 import matplotlib.pyplot as plt
 
-from constants import TEST_DIR, MODEL_PATH, EMOTION_MAP, IMG_DIM, EMOTION_KEY_MAP
+from constants import TEST_DIR, MODEL_PATH, EMOTION_MAP, IMG_DIM, EMOTION_KEY_MAP, MODEL_PATH_test
 from results import Result
 
 from keras.models import load_model
@@ -12,6 +12,19 @@ from keras.preprocessing import image as kimg
 
 
 def predict_emotion(img, m):
+    """Returns a prediction of what emotion img contains given the model.
+
+        Args:
+            img : ndarray
+                The input img (grayscaled).
+            m : keras.models
+                A keras model.
+        Returns:
+            prediction : int
+                The int that represents the predicted emotion.
+            prediction_vector : ndarray
+                The prediction vector containing probabilies for each emotion.
+        """
     images = []
     img = kimg.img_to_array(img)
 
@@ -25,6 +38,16 @@ def predict_emotion(img, m):
     return prediction, prediction_vector
 
 def display_expression(full_img, model, mode=0):
+    """Returns a prediction of what emotion img contains given the model.
+
+        Args:
+            full_img : img
+                The input img (grayscaled).
+            model : keras.models
+                A keras model.
+            mode : int
+                Mode that enables relevant functionality for single image (mode = 0) or video (mode = 1)
+        """
     full_img_g = cv2.cvtColor(full_img, cv2.COLOR_BGR2GRAY)
 
     # Use haarcascade to find face in img
@@ -78,14 +101,18 @@ def display_expression(full_img, model, mode=0):
 
             plt.show()
 
-
-
         return
 
     print("Couldn't find face")
     return
 
 def detect_emotions_webcam(model):
+    """Turns on webcam and analyses facial expression using given keras CNN model.
+
+        Args:
+            m : keras.models
+                A keras model.
+    """
     webcam = cv2.VideoCapture(0)
 
     while True:
@@ -103,11 +130,11 @@ def detect_emotions_webcam(model):
 model = load_model(MODEL_PATH)
 
 # path = "./Test pics/How-To-Control-Hunger-E28093-20-Best-Strategies-To-Stop-Feeling-Hungry-All-The-Time-624x702.png"
-# path = "./Test pics/barry.jpg"
+path = "./Test pics/barry.jpg"
 # path = "./Test pics/got.jpg"
 
-# full_img = cv2.imread(path)
-# display_expression(full_img, model)
+full_img = cv2.imread(path)
+display_expression(full_img, model)
 
 #detect_emotions_webcam(model)
 
@@ -130,7 +157,7 @@ if test == True:
 
             result.add(emotion_str)
 
-        result.summarize()
+        #result.summarize()
         total += result.total
         correct += result.predictions[EMOTION_KEY_MAP[emotion]]
 
