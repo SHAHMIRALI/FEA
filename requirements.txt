@@ -6,5 +6,6 @@ opencv-python
 keras
 pillow
 flask
+gunicorn
 dropbox
 pprintpp
