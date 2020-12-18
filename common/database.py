@@ -23,15 +23,21 @@ def auth_dropbox():
                 "access token from the app console on the web.")
     return dbx
 
-def save_data(dbx, model_path, model_name, description="No description."):
-    model_upload_path = '/FEA/{0}_{1}'.format(int(mktime(gmtime(time()))), model_name)
+def save_dataset(dbx, dataset_path, dataset_name, description="Dataset: No description."):
+    _save_data(dbx, dataset_path, dataset_name, "dataset", description)
+
+def save_test_pics(dbx, test_pics_path, test_pics_name, description="Test pics: No description."):
+    _save_data(dbx, test_pics_path, test_pics_name, description)
+
+def _save_data(dbx, data_path, data_name, data_type, description):
+    data_upload_path = '/FEA/{0}_{1}_{2}.gzip'.format(int(mktime(gmtime(time()))), data_name, data_type)
     # Uploads contents of LOCALFILE to Dropbox
-    with open(model_path, 'rb') as f:
+    with open(data_path, 'rb') as f:
         # We use WriteMode=overwrite to make sure that the settings in the file
         # are changed on upload
-        print("Uploading " + model_path + " to Dropbox as " + model_upload_path + "...")
+        print("Uploading " + data_path + " to Dropbox as " + data_upload_path + "...")
         try:
-            dbx.files_upload(f.read(), model_upload_path, mode=WriteMode('overwrite'))
+            dbx.files_upload(f.read(), data_upload_path, mode=WriteMode('overwrite'))
         except ApiError as err:
             # This checks for the specific error where a user doesn't have
             # enough Dropbox space quota to upload this file
@@ -45,11 +51,18 @@ def save_data(dbx, model_path, model_name, description="No description."):
                 print(err)
                 sys.exit()
 
+def list_data(dbx):
+    file_names = map(lambda x: (x.name).split('_'), dbx.files_list_folder('/FEA').entries)
+    datasets = list(filter(lambda x: 'dataset' in x[-1], file_names))
+    test_pics = list(filter(lambda x: 'test_pics' in x[-1], file_names))
+
+    return datasets, test_pics
+
 if __name__ == "__main__":
     # Check for an access token
     if (len(DROPBOX_TOKEN) == 0):
         sys.exit("ERROR: Looks like you didn't add your access token.")
 
     dbx = auth_dropbox()
-    save_data(dbx, DATASET_PACKAGE_PATH, "dataset.gzip", "Initial")
-    save_data(dbx, TEST_PICS_PACKAGE_PATH, "test_pics.gzip", "Initial")
+    # save_data(dbx, DATASET_PACKAGE_PATH, "test_auto_deploy", "Initial")
+    # save_data(dbx, TEST_PICS_PACKAGE_PATH, "test_auto_deploy", "Initial")
