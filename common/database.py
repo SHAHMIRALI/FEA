@@ -56,7 +56,7 @@ def _save_data(dbx, data_path, data_name, data_type, description):
 
 def list_data(dbx):
     file_names = map(lambda x: (x.name).split('_'), dbx.files_list_folder('/FEA').entries)
-    print(file_names)
+    print(list(file_names))
     datasets = list(filter(lambda x: 'dataset' in x[-1], file_names))
     test_pics = list(filter(lambda x: 'test-pics' in x[-1], file_names))
 
