@@ -12,7 +12,8 @@ def hello_world():
 
 @app.route('/list')
 def list_all_models():
-    return list_data(dbx)
+    databases, test_pics = list_data(dbx)
+    return {'databases': databases, 'test_pics': test_pics}
 
 @app.route('/predict')
 def get_user_image():
