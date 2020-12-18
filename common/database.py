@@ -56,10 +56,18 @@ def _save_data(dbx, data_path, data_name, data_type, description):
 
 def list_data(dbx):
     file_names = map(lambda x: (x.name).split('_'), dbx.files_list_folder('/FEA').entries)
-    datasets = list(filter(lambda x: 'dataset' in x[-1], file_names))
-    test_pics = list(filter(lambda x: 'test-pics' in x[-1], file_names))
+    datasets = []
+    test_pics = []
+    
+    for name in file_names:
+        if 'dataset' in name[-1]:
+            datasets.append(name)
+        elif 'test-pics' in name[-1]:
+            test_pics.append(name)
+        else:
+            print(name[-1])
 
-    return datasets, test_pics
+    return list(datasets), list(test_pics)
 
 if __name__ == "__main__":
     # Check for an access token
@@ -67,5 +75,6 @@ if __name__ == "__main__":
         sys.exit("ERROR: Looks like you didn't add your access token.")
 
     dbx = auth_dropbox()
+    print(list_data(dbx))
     # save_data(dbx, DATASET_PACKAGE_PATH, "test_auto_deploy", "Initial")
     # save_data(dbx, TEST_PICS_PACKAGE_PATH, "test_auto_deploy", "Initial")
