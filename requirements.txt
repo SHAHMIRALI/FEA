@@ -11,3 +11,5 @@ opencv-python
 keras
 pillow
 flask
+dropbox
+pprintpp

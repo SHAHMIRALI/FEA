@@ -1,3 +1,6 @@
 .vscode
 train/Datasets
 test/Test_pics
+
+test/test_pics.gzip
+train/datasets.gzip

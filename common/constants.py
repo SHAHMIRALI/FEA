@@ -1,7 +1,11 @@
-TRAIN_DIR = r"./Datasets/Kaggle/train/"
-TEST_DIR = r"./Datasets/Kaggle/test/"
-VALIDATION_DIR = r"./Datasets/Kaggle/validation/"
-MODEL_PATH = r"./Datasets/model.h5"
+TRAIN_DIR = r"./train/Datasets/Kaggle/train/"
+TEST_DIR = r"./train/Datasets/Kaggle/test/"
+VALIDATION_DIR = r"./train/Datasets/Kaggle/validation/"
+MODEL_PATH = r"./train/Datasets/model.h5"
+
+DATASET_PACKAGE_PATH = r"./train/datasets.gzip"
+TEST_PICS_PACKAGE_PATH = r"./test/test_pics.gzip"
+
 IMG_DIM = 48
 BATCH_SIZE = 64
 EPOCHS = 50
