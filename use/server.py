@@ -7,6 +7,9 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, World!'
 
+def list_all_models():
+    return 'Testing'
+
 @app.route('/predict')
 def get_user_image():
     return render_template('index.html')
