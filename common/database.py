@@ -27,9 +27,12 @@ def save_dataset(dbx, dataset_path, dataset_name, description="Dataset: No descr
     _save_data(dbx, dataset_path, dataset_name, "dataset", description)
 
 def save_test_pics(dbx, test_pics_path, test_pics_name, description="Test pics: No description."):
-    _save_data(dbx, test_pics_path, test_pics_name, description)
+    _save_data(dbx, test_pics_path, test_pics_name, "test-pics", description)
 
 def _save_data(dbx, data_path, data_name, data_type, description):
+    if "_" in data_name:
+        raise Exception("Name cannot contain _")
+    
     data_upload_path = '/FEA/{0}_{1}_{2}.gzip'.format(int(mktime(gmtime(time()))), data_name, data_type)
     # Uploads contents of LOCALFILE to Dropbox
     with open(data_path, 'rb') as f:
@@ -54,7 +57,7 @@ def _save_data(dbx, data_path, data_name, data_type, description):
 def list_data(dbx):
     file_names = map(lambda x: (x.name).split('_'), dbx.files_list_folder('/FEA').entries)
     datasets = list(filter(lambda x: 'dataset' in x[-1], file_names))
-    test_pics = list(filter(lambda x: 'test_pics' in x[-1], file_names))
+    test_pics = list(filter(lambda x: 'test-pics' in x[-1], file_names))
 
     return datasets, test_pics
 
