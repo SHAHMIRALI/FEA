@@ -9,3 +9,6 @@ flask
 gunicorn
 dropbox
 pprintpp
+libsm6
+libxrender1
+libfontconfig1
