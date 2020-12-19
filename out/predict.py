@@ -8,6 +8,7 @@ from test.results import Result
 
 from keras.models import load_model
 from keras.preprocessing import image as kimg
+from model import create_model
 
 
 def predict_emotion(img, m):

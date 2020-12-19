@@ -3,6 +3,7 @@ import cv2
 from skimage import feature
 import dlib
 from common.constants import IMG_DIM
+import matplotlib.pyplot as plt
 
 
 def get_LBP(img):
@@ -61,7 +62,7 @@ def get_hog(img, tau):
     hog_feats = hog.compute(img).flatten()
     return hog_feats
 
-def get_facial_landmarks(img, shape_predictor):
+def get_facial_landmarks(img, shape_predictor, visualize=0):
     """Returns a facial landmark feature vector of img that is grayscaled'
 
     Args:
@@ -69,6 +70,8 @@ def get_facial_landmarks(img, shape_predictor):
             The input image (grayscaled).
         shape_predictor : dlib.shape_predictor(img, dlib.rectangle)
             The pretrained FL detector that returns a shape that represents landmarks
+        visualize : int
+            Whether or not to visualize the landmarks on img.
     Returns:
         FL_feat : ndarray
             The FL feature vector for img.
@@ -87,5 +90,30 @@ def get_facial_landmarks(img, shape_predictor):
 
         x_y[i] = [x, y]
 
+    # To visualize facial landmarks
+    if visualize == 1:
+
+        img_fl = img.copy()
+
+        # image without landmarks
+        plt.imshow(img_fl, 'gray')
+        plt.show()
+        for coord in x_y:
+            x = coord[0]
+            y = coord[1]
+            cv2.circle(img_fl, (x, y), 1, (0, 0, 0), -1)
+
+        # image with landmarks
+        plt.imshow(img_fl, 'gray')
+        plt.show()
+
     FL_feat = x_y.flatten()
     return FL_feat
+
+if __name__ == "__main__":
+    print("Test facial landmarks visualization")
+    img = cv2.imread(r'./Datasets/Kaggle/test/Happy/324.jpg')
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    shape_predictor = dlib.shape_predictor(r'./shape_predictor.dat')
+
+    FL = get_facial_landmarks(gray, shape_predictor, visualize=1)

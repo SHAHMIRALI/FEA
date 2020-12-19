@@ -22,33 +22,37 @@ x_val = augmentation_generator_val.flow_from_directory(VALIDATION_DIR,target_siz
 
 
 #Step 2 create CNN using Keras
-model = create_model()
+#Set dropout
+model = create_model(0.27)
 model.summary()
 
 # Step 3: Training with validation
-rlr_function = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=2, min_lr=0.00001, mode='auto')
+training = False
 
-data = model.fit(x=x_train, steps_per_epoch=x_train.n//x_train.batch_size, epochs=EPOCHS, validation_data = x_val,
-                 validation_steps = x_val.n//x_val.batch_size, callbacks=[rlr_function])
+if training == True:
+    rlr_function = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=2, min_lr=0.00005, mode='auto')
 
-model.save(MODEL_PATH)
+    data = model.fit(x=x_train, steps_per_epoch=x_train.n//x_train.batch_size, epochs=EPOCHS, validation_data=x_val,
+                     validation_steps=x_val.n//x_val.batch_size, callbacks=[rlr_function])
 
-# SHOW GRAPHS
-# Training vs Validation accuracy
-plt.plot(data.history['accuracy'])
-plt.plot(data.history['val_accuracy'])
-plt.title('Model accuracy')
-plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
+    model.save(MODEL_PATH)
 
-# Loss graph
-plt.plot(data.history['loss'])
-plt.plot(data.history['val_loss'])
-plt.title('Model loss')
-plt.ylabel('Loss')
-plt.xlabel('Epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
+    # SHOW GRAPHS
+    # Training vs Validation accuracy
+    plt.plot(data.history['accuracy'])
+    plt.plot(data.history['val_accuracy'])
+    plt.title('Model accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+
+    # Loss graph
+    plt.plot(data.history['loss'])
+    plt.plot(data.history['val_loss'])
+    plt.title('Model loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
 
