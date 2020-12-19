@@ -4,6 +4,8 @@ from flask import Flask, flash, render_template, request, redirect, url_for
 from common.database import list_data, auth_dropbox
 from common.constants import IMAGE_UPLOAD_PATH, ALLOWED_EXTENSIONS
 
+from werkzeug.utils import secure_filename
+
 app = Flask(__name__)
 app.config['UPLOAD_PATH'] = IMAGE_UPLOAD_PATH
 dbx = auth_dropbox()
