@@ -2,13 +2,9 @@ numpy<1.19.0,>=1.16.0
 setuptools>=41.0.0
 matplotlib
 livelossplot
-opencv-python
 keras
 pillow
 flask
 gunicorn
 dropbox
 pprintpp
-libsm6
-libxrender1
-libfontconfig1
