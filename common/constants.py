@@ -6,6 +6,9 @@ MODEL_PATH = r"./train/Datasets/model.h5"
 DATASET_PACKAGE_PATH = r"./train/datasets.gzip"
 TEST_PICS_PACKAGE_PATH = r"./test/test_pics.gzip"
 
+IMAGE_UPLOAD_PATH = r"./use/"
+ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg']
+
 IMG_DIM = 48
 BATCH_SIZE = 64
 EPOCHS = 50
