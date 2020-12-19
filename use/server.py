@@ -1,8 +1,10 @@
 import os
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for, send_file
 
 from common.database import list_data, auth_dropbox
-from common.constants import IMAGE_UPLOAD_PATH, ALLOWED_EXTENSIONS
+from common.constants import IMAGE_UPLOAD_PATH, ALLOWED_EXTENSIONS, IMAGE_OUTPUT_PATH
+
+from use.use_model import detect_emotions_image
 
 from werkzeug.utils import secure_filename
 
@@ -36,9 +38,15 @@ def get_user_image():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
             return redirect(url_for('uploaded_file',
                                     filename=filename))
+
+@app.route('/predicted_results', methods=['GET', 'POST'])
+def show_user_image_result():
+    image = detect_emotions_image(IMAGE_UPLOAD_PATH, model, IMAGE_OUTPUT_PATH)
+    return send_file(IMAGE_OUTPUT_PATH)
+
 
 def allowed_file(filename):
     return '.' in filename and \

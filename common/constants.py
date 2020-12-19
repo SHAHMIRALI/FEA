@@ -7,6 +7,7 @@ DATASET_PACKAGE_PATH = r"./train/datasets.gzip"
 TEST_PICS_PACKAGE_PATH = r"./test/test_pics.gzip"
 
 IMAGE_UPLOAD_PATH = r"./use/"
+IMAGE_OUTPUT_PATH = r"./use/out.jpg"
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg']
 
 IMG_DIM = 48

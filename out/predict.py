@@ -20,7 +20,7 @@ def predict_emotion(img, m):
 
     return prediction, prediction_vector
 
-def display_expression(full_img, model, mode=0):
+def display_expression(full_img, model, mode=0, output_file=None):
     full_img_g = cv2.cvtColor(full_img, cv2.COLOR_BGR2GRAY)
 
     # Use haarcascade to find face in img
@@ -52,6 +52,9 @@ def display_expression(full_img, model, mode=0):
 
         cv2.imshow("Facial Expression Analysis", full_img)
         cv2.waitKey(mode)
+
+        if output_file:
+            cv2.imwrite(output_file, full_img)
 
         # Show prediction vector bar graph
         if mode == 0:
