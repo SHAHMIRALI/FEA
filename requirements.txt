@@ -9,4 +9,4 @@ flask
 gunicorn
 dropbox
 pprintpp
-tensorflow
+tensorflow-cpu
