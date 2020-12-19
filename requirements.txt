@@ -6,4 +6,4 @@ keras
 flask
 dropbox
 pprintpp
-tensorflow-cpu
+tensorflow==1.15
