@@ -2,12 +2,28 @@ import numpy as np
 import cv2
 
 import matplotlib.pyplot as plt
-from keras.preprocessing import image as kimg
 
-from common.constants import EMOTION_MAP, IMG_DIM
+from common.constants import TEST_DIR, MODEL_PATH, EMOTION_MAP, IMG_DIM, EMOTION_KEY_MAP, MODEL_PATH_test
+from test.results import Result
+
+from keras.models import load_model
+from keras.preprocessing import image as kimg
 
 
 def predict_emotion(img, m):
+    """Returns a prediction of what emotion img contains given the model.
+
+        Args:
+            img : ndarray
+                The input img (grayscaled).
+            m : keras.models
+                A keras model.
+        Returns:
+            prediction : int
+                The int that represents the predicted emotion.
+            prediction_vector : ndarray
+                The prediction vector containing probabilies for each emotion.
+        """
     images = []
     img = kimg.img_to_array(img)
 
@@ -21,6 +37,18 @@ def predict_emotion(img, m):
     return prediction, prediction_vector
 
 def display_expression(full_img, model, mode=0, output_file=None):
+    """Returns a prediction of what emotion img contains given the model.
+
+        Args:
+            full_img : img
+                The input img (grayscaled).
+            model : keras.models
+                A keras model.
+            mode : int
+                Mode that enables relevant functionality for single image (mode = 0) or video (mode = 1)
+            output_file: string/None
+                Output file to write instead of show the image
+        """
     full_img_g = cv2.cvtColor(full_img, cv2.COLOR_BGR2GRAY)
 
     # Use haarcascade to find face in img
@@ -81,3 +109,61 @@ def display_expression(full_img, model, mode=0, output_file=None):
 
     print("Couldn't find face")
     return
+
+def detect_emotions_webcam(model):
+    """Turns on webcam and analyses facial expression using given keras CNN model.
+
+        Args:
+            m : keras.models
+                A keras model.
+    """
+    webcam = cv2.VideoCapture(0)
+
+    while True:
+        capture, frame = webcam.read()
+
+        if capture == False:
+            continue
+
+        # in video mode
+        display_expression(frame, model, mode=1)
+
+    return
+
+if __name__ == "__main__":    
+    # Find facial expression in an individual img
+    model = load_model(MODEL_PATH)
+
+    # path = "./Test pics/How-To-Control-Hunger-E28093-20-Best-Strategies-To-Stop-Feeling-Hungry-All-The-Time-624x702.png"
+    path = "./Test pics/barry.jpg"
+    # path = "./Test pics/got.jpg"
+
+    full_img = cv2.imread(path)
+    display_expression(full_img, model)
+
+    #detect_emotions_webcam(model)
+
+    # Test our models accuracy across our testing set
+    test = True
+
+    if test == True:
+        total = 0
+        correct = 0
+
+        for emotion in os.listdir(TEST_DIR):
+            result = Result(emotion)
+            for filename in os.listdir(os.path.join(TEST_DIR, emotion)):
+                path = os.path.join(os.path.join(TEST_DIR,emotion), filename)
+                img = kimg.load_img(path, target_size=(IMG_DIM, IMG_DIM), color_mode="grayscale")
+
+                # models prediction
+                prediction, pv = predict_emotion(img, model)
+                emotion_str = EMOTION_MAP[prediction[0]]
+
+                result.add(emotion_str)
+
+            #result.summarize()
+            total += result.total
+            correct += result.predictions[EMOTION_KEY_MAP[emotion]]
+
+        print("test accuracy: {}".format(correct/total))
