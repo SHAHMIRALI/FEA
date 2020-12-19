@@ -1,8 +1,9 @@
-torch
-torchvision
-tqdm
+h5py~=2.10.0
+numpy
+setuptools
 matplotlib
-pillow
-livelossplot
-tensorflow
-ipython
+keras
+flask
+dropbox
+pprintpp
+tensorflow==1.15.4
