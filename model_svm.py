@@ -88,7 +88,7 @@ print("Finished loading images")
 # Create SVM model
 model = SVC(random_state=0, max_iter=15000, kernel='rbf', decision_function_shape='ovr', gamma='auto')
 
-training = True
+training = False
 
 if training == True:
     print("Starting SVM training...")

@@ -9,6 +9,7 @@ from results import Result
 
 from keras.models import load_model
 from keras.preprocessing import image as kimg
+from model import create_model
 
 
 def predict_emotion(img, m):
@@ -129,14 +130,14 @@ def detect_emotions_webcam(model):
 # Find facial expression in an individual img
 model = load_model(MODEL_PATH)
 
-# path = "./Test pics/How-To-Control-Hunger-E28093-20-Best-Strategies-To-Stop-Feeling-Hungry-All-The-Time-624x702.png"
-path = "./Test pics/barry.jpg"
-# path = "./Test pics/got.jpg"
+path = "./Test pics/How-To-Control-Hunger-E28093-20-Best-Strategies-To-Stop-Feeling-Hungry-All-The-Time-624x702.png"
+#path = "./Test pics/kg.PNG"
+#path = "./Test pics/got.jpg"
 
 full_img = cv2.imread(path)
 display_expression(full_img, model)
 
-#detect_emotions_webcam(model)
+detect_emotions_webcam(model)
 
 # Test our models accuracy across our testing set
 test = True
@@ -147,6 +148,8 @@ if test == True:
 
     for emotion in os.listdir(TEST_DIR):
         result = Result(emotion)
+        total_s = 0
+        correct_s = 0
         for filename in os.listdir(os.path.join(TEST_DIR, emotion)):
             path = os.path.join(os.path.join(TEST_DIR,emotion), filename)
             img = kimg.load_img(path, target_size=(IMG_DIM, IMG_DIM), color_mode="grayscale")
@@ -156,9 +159,13 @@ if test == True:
             emotion_str = EMOTION_MAP[prediction[0]]
 
             result.add(emotion_str)
+            total_s += 1
+            if emotion == emotion_str:
+                correct_s += 1
 
         #result.summarize()
         total += result.total
         correct += result.predictions[EMOTION_KEY_MAP[emotion]]
+        print("{} accuracy: {}".format(emotion, correct_s/total_s))
 
     print("test accuracy: {}".format(correct/total))

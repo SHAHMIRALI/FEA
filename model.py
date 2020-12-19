@@ -5,40 +5,40 @@ from keras.optimizers import Adam
 from constants import TRAIN_DIR, TEST_DIR, MODEL_PATH, IMG_DIM, BATCH_SIZE, EPOCHS
 
 
-def create_model(lr=0.0005):
+def create_model(dropout, lr=0.0008):
     # Initialising the CNN
     model = Sequential()
 
     # First CNN layer
-    # 64 filters 3x3, images are 48x48 and 1 channel cuz grayscale
+    # 64 filters 3x3, images are 48x48 and 1 channel because grayscale
     model.add(Conv2D(64, (3, 3), padding='same', input_shape=(IMG_DIM, IMG_DIM, 1)))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     # Divide height and width of conv block by 2
     model.add(MaxPooling2D(pool_size=(2, 2)))
     # can mess around with this hyperparameter (drops random data)
-    model.add(Dropout(0.25))
+    model.add(Dropout(dropout))
 
     # Second CNN layer
     model.add(Conv2D(128, (5, 5), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
+    model.add(Dropout(dropout))
 
     # Third CNN layer
     model.add(Conv2D(512, (3, 3), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
+    model.add(Dropout(dropout))
 
     # Fourth CNN layer
     model.add(Conv2D(512, (3, 3), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
+    model.add(Dropout(dropout))
 
     # Flattening
     model.add(Flatten())
@@ -47,13 +47,13 @@ def create_model(lr=0.0005):
     model.add(Dense(256))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.25))
+    model.add(Dropout(dropout))
 
     # Fully connected layer 2nd layer
     model.add(Dense(512))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.25))
+    model.add(Dropout(dropout))
 
     # 7 labels
     model.add(Dense(7, activation='softmax'))
