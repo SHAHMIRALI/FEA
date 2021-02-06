@@ -22,20 +22,31 @@ Python version: 3
 `python -m pip install pipenv`
 `pipenv install`
 
-### Demo
+## Demo
 Our CNN model is designed to take in a 48x48 image, so we test images of various sizes as
 follows (steps on how a predic􀆟on is made in ‘predic􀆟on.py’):
 
-## Single Images
+### Single Images
 Pass an image (ndarray) through display_expression(img, model, mode=0), a long
-with a CNN model. Mode 0 means it's for a single image and will show a predic􀆟on vector along
-with the image’s predic􀆟on. This func􀆟on uses a pretrained model ‘haarcascade’ to detect a
-face and create a bounding box around it. The resul􀆟ng image is then extracted and rescaled to
-48x48 and sent through our model. The resul􀆟ng predic􀆟on is displayed on the image.
+with a CNN model. Mode 0 means it's for a single image and will show a prediction vector along
+with the image’s prediction. This function uses a pretrained model ‘haarcascade’ to detect a
+face and create a bounding box around it. The resulting image is then extracted and rescaled to
+48x48 and sent through our model. The resulting prediction is displayed on the image.
 
-## Webcam feed
-We call the func􀆟on detect_emotions_webcam(model), which runs your webcam feed
-and displays it to you if a face is detected. It calls d isplay_expression(img, model,
-mode=1) b ut this 􀆟me in video mode, so it doesn’t constantly show a predic􀆟on vector. It
-predicts expression on each frame in real-􀆟me due to haar cascades fast frontal face detec􀆟on,
+![image](https://user-images.githubusercontent.com/32078797/107105382-fcbeab00-67f3-11eb-820d-78c780a72480.png)
+![image](https://user-images.githubusercontent.com/32078797/107105389-09db9a00-67f4-11eb-9139-9c5a526cc58c.png)
+
+![image](https://user-images.githubusercontent.com/32078797/107105400-152ec580-67f4-11eb-88ac-286185a8a0b7.png)
+![image](https://user-images.githubusercontent.com/32078797/107105406-1fe95a80-67f4-11eb-93ea-e2f0373ef648.png)
+
+
+### Webcam feed
+We call the function detect_emotions_webcam(model), which runs your webcam feed
+and displays it to you if a face is detected. It calls display_expression(img, model,
+mode=1) but this time in video mode, so it doesn’t constantly show a prediction vector. It
+predicts expression on each frame in real-time due to haar cascades fast frontal face detection,
 which would be ideal for a twitch streamer.
+
+![image](https://user-images.githubusercontent.com/32078797/107105422-342d5780-67f4-11eb-8fba-ce1349fd737f.png)
+![image](https://user-images.githubusercontent.com/32078797/107105432-3ee7ec80-67f4-11eb-8c4c-fce1e1e81615.png)
+
