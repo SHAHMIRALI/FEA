@@ -61,4 +61,4 @@ Test accuracies for our CNN and SVM models:
 ![image](https://user-images.githubusercontent.com/32078797/107105686-86bb4380-67f5-11eb-9535-eea8d8eda7da.png)
 ![image](https://user-images.githubusercontent.com/32078797/107105775-fd584100-67f5-11eb-9c5d-bdba265c70c1.png)
 
-Full detailed report: [a relative link](Final%20Report%20-%20NP%20Easy.pdf)
+Full detailed [report](Final%20Report%20-%20NP%20Easy.pdf):
