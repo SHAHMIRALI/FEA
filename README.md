@@ -24,7 +24,7 @@ Python version: 3
 
 ## Demo
 Our CNN model is designed to take in a 48x48 image, so we test images of various sizes as
-follows (steps on how a predic􀆟on is made in ‘predic􀆟on.py’):
+follows (steps on how a prediction is made in ‘prediction.py’):
 
 ### Single Images
 Pass an image (ndarray) through display_expression(img, model, mode=0), a long
@@ -55,9 +55,9 @@ Test accuracies for our CNN and SVM models:
 
 ### CNN
 ![image](https://user-images.githubusercontent.com/32078797/107105604-3fcd4e00-67f5-11eb-8dbf-5c82f633f536.png)
-![image](https://user-images.githubusercontent.com/32078797/107105609-4f4c9700-67f5-11eb-97ca-87c1aa3d8fc6.png)
+![image](https://user-images.githubusercontent.com/32078797/107105756-e87bad80-67f5-11eb-90e9-234cfe262e12.png)
 
 ### SVM
 ![image](https://user-images.githubusercontent.com/32078797/107105686-86bb4380-67f5-11eb-9535-eea8d8eda7da.png)
-![image](https://user-images.githubusercontent.com/32078797/107105691-8f137e80-67f5-11eb-9842-f4d1fd0face0.png)
+![image](https://user-images.githubusercontent.com/32078797/107105775-fd584100-67f5-11eb-9c5d-bdba265c70c1.png)
 
