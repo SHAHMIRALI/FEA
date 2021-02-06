@@ -6,4 +6,4 @@ keras
 flask
 dropbox
 pprintpp
-tensorflow==1.15.4
+tensorflow==2.4.0
