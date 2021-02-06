@@ -47,6 +47,17 @@ mode=1) but this time in video mode, so it doesn’t constantly show a predictio
 predicts expression on each frame in real-time due to haar cascades fast frontal face detection,
 which would be ideal for a twitch streamer.
 
-![image](https://user-images.githubusercontent.com/32078797/107105422-342d5780-67f4-11eb-8fba-ce1349fd737f.png)
+![image](https://user-images.githubusercontent.com/32078797/107105584-21675280-67f5-11eb-8426-84d76ff9a3d1.png)
 ![image](https://user-images.githubusercontent.com/32078797/107105432-3ee7ec80-67f4-11eb-8c4c-fce1e1e81615.png)
+
+## Results
+Test accuracies for our CNN and SVM models:
+
+### CNN
+![image](https://user-images.githubusercontent.com/32078797/107105604-3fcd4e00-67f5-11eb-8dbf-5c82f633f536.png)
+![image](https://user-images.githubusercontent.com/32078797/107105609-4f4c9700-67f5-11eb-97ca-87c1aa3d8fc6.png)
+
+### SVM
+![image](https://user-images.githubusercontent.com/32078797/107105686-86bb4380-67f5-11eb-9535-eea8d8eda7da.png)
+![image](https://user-images.githubusercontent.com/32078797/107105691-8f137e80-67f5-11eb-9842-f4d1fd0face0.png)
 
