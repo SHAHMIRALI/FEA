@@ -15,19 +15,6 @@ Extract the datasets after a commit:
 Compress the datasets before a commit:
 ```tar -cz test/Test_pics/ > test/test_pics.gzip```
 
-## Google Colab
-### First time
-1. Go to https://colab.research.google.com/github/ and select `"Include private repos"`
-2. Under Repository: pick `420NPEasy/FEA`
-3. Under Branch: pick `main`
-1. Open `train.ipynb`.
-2. Open `predict.ipynb`.
-
-### Notebooks
-`train.ipynb` Colab notebook: https://colab.research.google.com/github/420NPEasy/FEA/blob/main/train.ipynb
-
-`predict.ipynb` Colab notebook: https://colab.research.google.com/github/420NPEasy/FEA/blob/main/predict.ipynb
-
 ## Code
 Python version: 3
 
